@@ -11,7 +11,7 @@ import (
 
 // Isso é o token da superHero
 const (
-	myToken = "f82cfc46bc540e8d69d147443076dcb2"
+// myToken = "f82cfc46bc540e8d69d147443076dcb2"
 )
 
 type MarvelResponse struct {
@@ -28,6 +28,8 @@ type MarvelResponse struct {
 
 func getMarvelCharacters(w http.ResponseWriter, r *http.Request) {
 
+	var token = r.Header.Get("Authorization")
+
 	var heroId = r.URL.Query().Get("hero_id")
 	if heroId == "" {
 		http.Error(w, "Parâmetro 'id do herói' é obrigatório", http.StatusBadRequest)
@@ -36,7 +38,7 @@ func getMarvelCharacters(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf(
 		"https://superheroapi.com/api/%s/%s/powerstats",
-		myToken,
+		token,
 		heroId,
 	)
 
